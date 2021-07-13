@@ -8,16 +8,17 @@
             Please try again.
         </p>
     {% else %}
-        <p>
-            Please, use the following form to sign in:
+        <p>Please, use the following form to sign in:</p>
+        <p>If you don't have an account <a href="{% url "register" %}">register here</a></p>
         </p>
     {% endif %}
     <div class="login-form">
-        <form action="{% url 'signin' %}" method="POST">
+        <form action="{% url 'login' %}" method="POST">
             {{form.as_p}}
             {% csrf_token %}
             <input type="hidden" name="text" value="{{ next }}">
             <p><input type="submit" value="Sign in"></p>
         </form>
+        <p><a href="{% url "password_reset" %}">Fogotten your password?</a></p>
     </div>
 {% endblock %}

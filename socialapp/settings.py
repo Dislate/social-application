@@ -34,19 +34,30 @@ ALLOWED_HOSTS = []
 
 # Redirect variables
 LOGIN_REDIRECT_URL = 'dashboard'
-LOGIN_URL = 'signin'
+LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
+
+# Email setting
+# Output in console
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# SMTP's setting for my email sendler
+EMAIL_HOST = config.get('EMAIL_HOST')
+EMAIL_HOST_USER = config.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config.get('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = config.get('EMAIL_PORT')
+EMAIL_USE_TLS = config.get('EMAIL_USE_TLS')
 
 # Application definition
 
 INSTALLED_APPS = [
+    'account.apps.AccountConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'account.apps.AccountConfig',
 ]
 
 MIDDLEWARE = [
