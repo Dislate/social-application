@@ -1,6 +1,6 @@
 from django import forms
 from .models import Image
-from urllib import request
+from urllib import request, error
 from django.core.files.base import ContentFile
 from django.utils.text import slugify
 
@@ -20,6 +20,11 @@ class ImageCreateForm(forms.ModelForm):
         extension = url.rsplit('.', 1)[1].lower()
         if extension not in valid_extensions:
             raise forms.ValidationError('The given URL does not exist match valid image extensions.')
+
+        try:
+            request.urlopen(url)
+        except error.HTTPError:
+            raise forms.ValidationError('This image can\'t download from external site')
         return url
 
     def save(self, force_insert=False, force_update=False, commit=True):
@@ -28,6 +33,7 @@ class ImageCreateForm(forms.ModelForm):
         image_name = f"{slugify(image.title)}.{image_url.rsplit('.', 1)[1].lower()}"
 
         response = request.urlopen(image_url)
+
         image.image.save(image_name,
                          ContentFile(response.read()),
                          save=False)
