@@ -20,4 +20,8 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     # Profile's url
     path('edit/', views.edit, name='edit'),
+    # User's url
+    path('users/', views.user_list, name='user_list'),
+    path('users/<username>', views.user_detail, name='user_detail'),
+    path('users/follow/', views.user_follow, name='user_follow'),
 ]
