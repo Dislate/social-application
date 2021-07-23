@@ -65,5 +65,4 @@ target/
 # Other
 /account/static/js
 /media/*
-/account/migrations
-/images/migrations
+/*/migrations
