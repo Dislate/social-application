@@ -5,9 +5,10 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.contrib import messages
 from django.contrib.auth.models import User
-from common.decorators import ajax_required
+from ..common.decorators import ajax_required
 from .models import Profile, Contact
 from .forms import LoginForm, RegistrationForm, UserEditForm, ProfileEditForm
+from ..actions.utils import create_function
 
 # Create your views here.
 def user_login(request):
@@ -46,6 +47,7 @@ def register(request):
             new_user.set_password(user_form.cleaned_data['password'])
             new_user.save()
             Profile.objects.create(user=new_user)
+            create_function(new_user, 'has created an account')
             return render(request,
                           'account/register_done.html',
                           {'new_user': new_user})
@@ -110,6 +112,7 @@ def user_follow(request):
             if action == 'follow':
                 Contact.objects.get_or_create(user_from=request.user,
                                               user_to=user)
+                create_function(request.user, 'is following', user)
             else:
                 Contact.objects.filter(user_from=request.user,
                                        user_to=user).delete()
