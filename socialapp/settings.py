@@ -104,6 +104,12 @@ WSGI_APPLICATION = 'socialapp.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+# Redis settings
+REDIS_HOST = config.get('REDIS_HOST')
+REDIS_PORT = config.get("REDIS_PORT")
+REDIS_DB = config.get("REDIS_DB")
+
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
